@@ -1,0 +1,22 @@
+{{/* 代码差异：按 unified diff 语法给每行加类别，符号保留在行内文本里 */}}
+{{- $metaPrefixes := slice "diff --git " "index " "new file mode " "deleted file mode " "old mode " "new mode " "similarity index " "dissimilarity index " "rename from " "rename to " "copy from " "copy to " "Binary files " "GIT binary patch" "\\ No newline at end of file" -}}
+{{- $lines := "" -}}
+{{- range $line := split (strings.TrimRight "\r\n" .Inner) "\n" -}}
+  {{- $line = strings.TrimRight "\r" $line -}}
+  {{- $cls := "diff-ctx" -}}
+  {{- if or (hasPrefix $line "--- ") (hasPrefix $line "+++ ") -}}
+    {{- $cls = "diff-file" -}}
+  {{- else if hasPrefix $line "@@" -}}
+    {{- $cls = "diff-hunk" -}}
+  {{- else if hasPrefix $line "+" -}}
+    {{- $cls = "diff-add" -}}
+  {{- else if hasPrefix $line "-" -}}
+    {{- $cls = "diff-del" -}}
+  {{- else -}}
+    {{- range $metaPrefixes -}}
+      {{- if hasPrefix $line . -}}{{- $cls = "diff-meta" -}}{{- end -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $lines = printf `%s<span class="diff-line %s">%s</span>` $lines $cls (htmlEscape $line) -}}
+{{- end -}}
+<div class="highlight language-diff">{{ partial "components/toolbar.html" "diff" }}<pre class="diff"><code>{{ $lines | safeHTML }}</code></pre></div>

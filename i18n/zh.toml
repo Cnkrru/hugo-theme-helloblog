@@ -1,0 +1,125 @@
+# 中文文案。键名与 en.toml 一一对应，模板里通过 T "键名" 调用
+
+# ---------- 页头 ----------
+"header.menu" = "菜单"
+"header.theme" = "切换明暗"
+"header.immersive" = "沉浸阅读"
+"header.music" = "音乐"
+"header.language" = "语言"
+"search.placeholder" = "搜索"
+"search.failed" = "搜索索引加载失败"
+"search.noResult" = "搜索「{kw}」：未找到结果"
+"search.counter" = "{count} 个结果"
+"search.category" = "分类"
+
+# ---------- 侧栏 ----------
+"sidebar.avatar" = "头像"
+"sidebar.avatarAlt" = "Cnkrru的头像"
+"sidebar.saying" = "欢迎来到我的博客"
+"sidebar.unknown" = "未知"
+"sidebar.stats" = "统计"
+"sidebar.siteStats" = "站点统计"
+"sidebar.statsClose" = "关闭"
+"sidebar.busuanzi" = "不蒜子"
+"sidebar.todayPv" = "今日访问"
+"sidebar.todayUv" = "今日访客"
+"sidebar.sitePv" = "站点访问"
+"sidebar.siteUv" = "站点访客"
+"sidebar.pagePv" = "本页浏览"
+"sidebar.pageUv" = "本页访客"
+
+# ---------- 首页 ----------
+"home.welcome" = "欢迎来到我的博客"
+"home.read" = "开始阅读"
+"home.about" = "关于我"
+
+# ---------- 导航 ----------
+"nav.posts" = "文章"
+"nav.about" = "关于"
+"nav.category" = "归档"
+"nav.tags" = "标签"
+"nav.link" = "链接"
+
+# ---------- 音乐播放器 ----------
+"music.cover" = "封面"
+"music.close" = "关闭"
+"music.prev" = "上一首"
+"music.play" = "播放/暂停"
+"music.next" = "下一首"
+"music.mute" = "静音"
+"music.list" = "播放列表 ({{ . }})"
+"music.emptyTitle" = "未选择歌曲"
+"music.emptyArtist" = "未知艺术家"
+"music.loading" = "加载中…"
+"music.loadFailed" = "音乐源加载失败"
+
+# ---------- 目录 / 返回顶部 ----------
+"toc.title" = "目录"
+"toc.open" = "打开目录"
+"toc.heading" = "文章目录"
+"toc.close" = "关闭目录"
+"backtop.title" = "返回顶部"
+
+# ---------- 文章 ----------
+"post.published" = "发布"
+"post.updated" = "更新于"
+"post.history" = "更新记录"
+"post.prev" = "上一篇"
+"post.next" = "下一篇"
+"post.none" = "暂无"
+"post.words" = "总字数"
+"post.readingTime" = "预计时间"
+"post.minutes" = "{{ . }}分钟"
+"post.share" = "分享这篇文章"
+"post.wechatQr" = "微信分享二维码"
+"post.copyLink" = "复制链接"
+"post.wechat" = "微信"
+"post.weibo" = "微博"
+"post.comment" = "评论"
+"post.commentHint" = "想说点什么呢……"
+"post.commentFailed" = "评论加载失败，请检查网络后刷新重试"
+"post.anchor" = "此标题的链接"
+
+# ---------- 归档 / 标签 / 链接页 ----------
+"arch.category" = "分类"
+"arch.year" = "年份"
+"arch.month" = "月份"
+"arch.postsCount" = "{{ . }} 篇"
+"arch.empty" = "暂无文章"
+"arch.emptyTags" = "暂无标签"
+"arch.uncategorized" = "未分类"
+"tags.postsUnder" = "「{tag}」下的文章"
+"link.prev" = "上一页"
+"link.next" = "下一页"
+"link.category" = "分类"
+"link.pageInfo" = "第 1 / {{ . }} 页"
+"link.currentCategory" = "当前分类：{{ . }}"
+"link.empty" = "暂无链接"
+"link.uncategorized" = "未分类"
+
+# ---------- 首页热力图 ----------
+"heatmap.title" = "创作活动热力图"
+"heatmap.months" = "一月|二月|三月|四月|五月|六月|七月|八月|九月|十月|十一月|十二月"
+"heatmap.year" = "{{ . }}年"
+"heatmap.empty" = "暂无数据"
+"heatmap.less" = "少"
+"heatmap.more" = "多"
+
+# ---------- 提示块默认标题 ----------
+"admonition.tip" = "提示"
+"admonition.info" = "信息"
+"admonition.warn" = "警告"
+"admonition.error" = "错误"
+
+# ---------- 分页 ----------
+"pager.prev" = "上一页"
+"pager.next" = "下一页"
+"pager.total" = "共 {{ . }} 页"
+
+# ---------- 页脚 ----------
+"footer.runtime" = "本博客已运行: %s 天 %s 时 %s 分 %s秒"
+
+# ---------- 404 ----------
+"notfound.title" = "页面不存在"
+"notfound.text" = "你访问的页面可能已被移除或地址有误。"
+"notfound.back" = "返回首页"

@@ -1,0 +1,2 @@
+{{/* mermaid 图：编译期只产出容器，运行时由 content.js 按需加载并渲染 */}}
+<div class="highlight language-mermaid">{{ partial "components/toolbar.html" "mermaid" }}<pre data-lang="mermaid"><code>{{ .Inner | htmlEscape | safeHTML }}</code></pre></div>

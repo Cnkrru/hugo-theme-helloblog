@@ -1,0 +1,46 @@
+{{/* 站点统计：不蒜子，数值由运行期脚本填充 */}}
+<button class="bsz-btn" type="button">{{ T "sidebar.stats" }}</button>
+
+<dialog class="bsz-box">
+  <div class="bsz-header">
+    <p>{{ T "sidebar.siteStats" }}</p>
+    <button class="bsz-close" type="button" aria-label="{{ T "sidebar.statsClose" }}" title="{{ T "sidebar.statsClose" }}">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18" />
+        <line x1="6" y1="6" x2="18" y2="18" />
+      </svg>
+    </button>
+  </div>
+
+  <div class="bsz-body">
+    <div class="bsz-item">
+      <span class="bsz-label">{{ T "sidebar.todayPv" }}</span>
+      <span class="bsz-num" id="busuanzi_today_pv">…</span>
+    </div>
+    <div class="bsz-item">
+      <span class="bsz-label">{{ T "sidebar.todayUv" }}</span>
+      <span class="bsz-num" id="busuanzi_today_uv">…</span>
+    </div>
+    <div class="bsz-item">
+      <span class="bsz-label">{{ T "sidebar.sitePv" }}</span>
+      <span class="bsz-num" id="busuanzi_site_pv">…</span>
+    </div>
+    <div class="bsz-item">
+      <span class="bsz-label">{{ T "sidebar.siteUv" }}</span>
+      <span class="bsz-num" id="busuanzi_site_uv">…</span>
+    </div>
+    <div class="bsz-item">
+      <span class="bsz-label">{{ T "sidebar.pagePv" }}</span>
+      <span class="bsz-num" id="busuanzi_page_pv">…</span>
+    </div>
+    <div class="bsz-item">
+      <span class="bsz-label">{{ T "sidebar.pageUv" }}</span>
+      <span class="bsz-num" id="busuanzi_page_uv">…</span>
+    </div>
+  </div>
+
+  <div class="bsz-footer">
+    <p>Power by</p>
+    <a href="https://www.busuanzi.cc/">{{ T "sidebar.busuanzi" }}</a>
+  </div>
+</dialog>

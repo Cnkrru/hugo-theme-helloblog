@@ -1,0 +1,2 @@
+{{/* 正文容器：数据属性只提供本地 mermaid 脚本地址，交互统一由 content.js 接管 */}}
+<div class="content"{{ with resources.Get "vendor/mermaid.min.js" }} data-mermaid="{{ .RelPermalink }}"{{ end }}>{{ .Content }}</div>

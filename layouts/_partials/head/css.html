@@ -1,0 +1,35 @@
+{{- $theme := site.Params.color_theme | default "sakura" }}
+{{- $files := slice
+  "css/layout/var.css"
+  "css/theme/color.css"
+  (printf "css/theme/_%s.css" $theme)
+  "css/main.css"
+  "css/layout/shell.css"
+  "css/layout/immersive.css"
+  "css/index.css"
+  "css/pheader.css"
+  "css/pfooter.css"
+  "css/psidebar.css"
+  "css/pamin/post.css"
+  "css/pamin/postlist.css"
+  "css/pamin/archive.css"
+  "css/pamin/tags.css"
+  "css/pamin/link.css"
+  "css/pamin/about.css"
+  "css/pamin/notFound.css"
+}}
+{{- $styles := slice }}
+{{- range $files }}
+  {{- with resources.Get . }}{{ $styles = $styles | append . }}{{ end }}
+{{- end }}
+{{- $appearance := printf ":root{--glass-opacity:%v}" (site.Params.glass_opacity | default 0.5) | resources.FromString "css/appearance.css" }}
+{{- $styles = $styles | append $appearance }}
+{{- with $styles | resources.Concat "css/main.css" }}
+  {{- if hugo.IsDevelopment }}
+    <link rel="stylesheet" href="{{ .RelPermalink }}">
+  {{- else }}
+    {{- with . | minify | fingerprint }}
+      <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
+    {{- end }}
+  {{- end }}
+{{- end }}

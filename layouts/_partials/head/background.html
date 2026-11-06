@@ -1,0 +1,11 @@
+{{/* 背景图：取自 static 目录，亮暗只切换遮罩强度 */}}
+{{- $bg := site.Params.background }}
+{{- if and $bg.enable $bg.image }}
+{{- $url := $bg.image | relURL }}
+{{- $css := printf `:root{--bg-overlay-dark:%v;--bg-overlay-light:%v}
+body.bg-img{background:url(%s) center/cover no-repeat}
+body::before{content:"";position:fixed;inset:0;background:rgba(0,0,0,var(--bg-overlay-dark));pointer-events:none;z-index:-1}
+body.light::before{background:rgba(255,255,255,var(--bg-overlay-light))}` $bg.overlay_dark $bg.overlay_light $url }}
+{{- $res := resources.FromString "css/background.css" $css | minify | fingerprint }}
+<link rel="stylesheet" href="{{ $res.RelPermalink }}" integrity="{{ $res.Data.Integrity }}">
+{{- end }}

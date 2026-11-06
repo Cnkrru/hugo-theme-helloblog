@@ -1,0 +1,141 @@
+# ==============================================================================
+# Helloblog 主题配置 / 站点配置模板
+#
+# 用法：把本文件复制到你的站点根目录，改掉标注「必改」的项即可。
+# 标「站点级」的项写在主题里不生效，复制到站点根配置后才生效。
+#
+# Hugo 会把主题配置合并进站点，[params] / [taxonomies] / [markup] / [languages]
+# / [menus] 都会被继承；站点配置中同名的项优先，未定义的项直接用这里的值。
+# ==============================================================================
+
+# ---------- 基础 ----------
+baseURL = 'https://example.com/'   # 必改：你的域名
+title = 'My Blog'                  # 必改：站点名
+theme = 'helloblog'                # 主题安装到 themes/helloblog 后的名称
+languageCode = 'zh-cn'
+timeZone = 'Asia/Shanghai'         # 必改：影响文章时间与热力图
+copyright = '2026 My Blog'
+defaultContentLanguage = 'zh'
+defaultContentLanguageInSubdir = false   # 默认语言挂在根路径，英文挂 /en/
+
+enableRobotsTXT = true             # 生成 robots.txt 并指向 sitemap
+disableKinds = ['term']            # 标签只在 /tags/ 原地筛选，不生成详情页
+
+# ---------- 多语言 ----------
+[languages]
+  [languages.zh]
+    languageName = '中文'
+    languageCode = 'zh-cn'
+    weight = 1
+  [languages.en]
+    languageName = 'English'
+    languageCode = 'en'
+    weight = 2
+
+# ---------- 导航 ----------
+[[menus.main]]
+  identifier = 'nav.posts'       # 命中 i18n 的 nav.*，自动切换中英文案
+  name = '文章'                  # identifier 缺失时的回退文案
+  url = 'posts/'                 # 相对地址，英文站自动加 /en/ 前缀
+  weight = 1
+[[menus.main]]
+  identifier = 'nav.about'
+  name = '关于'
+  url = 'about/'
+  weight = 2
+[[menus.main]]
+  identifier = 'nav.category'
+  name = '归档'
+  url = 'category/'
+  weight = 3
+[[menus.main]]
+  identifier = 'nav.tags'
+  name = '标签'
+  url = 'tags/'
+  weight = 4
+[[menus.main]]
+  identifier = 'nav.link'
+  name = '友链'
+  url = 'link/'
+  weight = 5
+
+# 主题最低 Hugo 版本，安装时 Hugo 会做兼容性检查
+[module]
+  [module.hugoVersion]
+    extended = false               # 主题不做图片处理，标准版即可
+    min = '0.146.0'
+
+# ---------- 输出与分页（站点级） ----------
+[outputs]
+  home = ['html', 'rss', 'json']   # json 必须保留，否则搜索没有索引
+  section = ['html', 'rss']
+
+[pagination]
+  pagerSize = 6                    # 列表页每页条数
+
+[services.rss]
+  limit = 20                       # RSS 条目上限
+
+[imaging]
+  quality = 85                     # 图片处理画质
+  resampleFilter = 'Lanczos'
+
+[sitemap]
+  changefreq = 'weekly'
+  priority = 0.5
+
+# ---------- 内容解析 ----------
+[taxonomies]
+  tag = 'tags'                     # category 仅用于归档分组，不注册为 taxonomy
+
+[markup]
+  [markup.goldmark.renderer]
+    unsafe = true                  # 允许正文内嵌 HTML
+  [markup.goldmark.extensions]
+    [markup.goldmark.extensions.extras.mark]
+      enable = true                # 行内高亮 ==重点==
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel = 4
+    ordered = false
+
+# ---------- 站点参数 ----------
+[params]
+  description = 'A glassmorphism personal blog theme for Hugo.'  # 必改：SEO 兜底描述
+  keywords = ['Hugo', 'blog']      # 必改：SEO 兜底关键词
+  images = ['og-cover.png']        # 社交分享封面，相对 static 目录
+  color_theme = 'sakura'           # sakura / purple / ink / cyan / blue
+  glass_opacity = 0.5              # 玻璃拟态透明度 0~1
+  siteage = '2026-01-01'           # 必改：建站日期，留空则不显示运行天数
+  avatar = 'avator.webp'           # 侧栏头像，相对 static 目录
+  saying = ''                      # 侧栏一句话，留空用 i18n 文案
+
+  # 首页：打字机标题与粒子背景
+  [params.index]
+    logo = ''                      # 首页大标题，留空用 site.Title
+    welcome = ['Hello, world']     # 打字机轮播文案，可写多句
+    increase_speed = 60            # 打字间隔（毫秒）
+    decrease_speed = 40            # 删除间隔（毫秒）
+    loop_speed = 1000              # 句子切换前停顿（毫秒）
+    particle_enable = true         # 粒子背景开关
+    particle_distance = 180        # 粒子连线距离阈值
+
+  # 背景图与遮罩，图片放 static 目录
+  [params.background]
+    enable = true
+    image = 'background.webp'
+    overlay_dark = 0.6             # 暗色模式遮罩浓度
+    overlay_light = 0.5            # 亮色模式遮罩浓度
+
+  # 评论：默认关闭，启用前先在 giscus 拿到自己的仓库信息
+  [params.giscus]
+    enable = false
+    repo = ''                      # 例如 owner/repo
+    repo_id = ''
+    category = 'General'
+    category_id = ''
+    mapping = 'pathname'
+    strict = '0'
+    reactions_enabled = '1'
+    emit_metadata = '0'
+    input_position = 'bottom'

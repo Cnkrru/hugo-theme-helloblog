@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="{{ site.Language.LanguageCode }}">
+  <head>
+    {{ partial "head.html" . }}
+  </head>
+  <body class="{{ site.Params.color_theme | default "sakura" }} dark{{ if site.Params.background.enable }} bg-img{{ end }}">
+    <script>
+      // 首屏前恢复已保存的明暗偏好，避免亮暗闪烁
+      const ld = localStorage.getItem('ld')
+      if (ld === 'light' || ld === 'dark') {
+        document.body.classList.remove('light', 'dark')
+        document.body.classList.add(ld)
+      }
+    </script>
+
+    <div id="app">
+      {{ block "app" . }}
+        {{ partial "header.html" . }}
+        <div class="center">
+          {{ partial "sidebar.html" . }}
+          <main class="main">
+            {{ block "main" . }}{{ end }}
+          </main>
+        </div>
+        {{ partial "footer.html" . }}
+        {{/* 与原博客一致：仅文章详情页出现，列表页的滚动者是 .main，进度环无正文可度量 */}}
+        {{ if and .IsPage (eq .Section "posts") }}{{ partial "pmain/backToTop.html" . }}{{ end }}
+      {{ end }}
+    </div>
+    {{ if and .IsPage (eq .Section "posts") }}{{ partial "pmain/tocMobile.html" . }}{{ end }}
+    {{ partial "pheader/music.html" . }}
+    {{/* JS 运行时文案：搜索 / 音乐里的提示，{kw}、{count} 由脚本替换 */}}
+    <script type="application/json" id="i18n-data">{{ dict
+      "searchFailed" (T "search.failed")
+      "searchNoResult" (T "search.noResult")
+      "searchCounter" (T "search.counter")
+      "searchCategory" (T "search.category")
+      "musicLoading" (T "music.loading")
+      "musicLoadFailed" (T "music.loadFailed")
+      | jsonify | safeJS }}</script>
+  </body>
+</html>

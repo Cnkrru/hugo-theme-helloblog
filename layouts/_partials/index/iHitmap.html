@@ -1,0 +1,97 @@
+{{/* 首页热力图：构建期汇总文章发布日期、更新时间与历史记录日期 */}}
+{{- $activity := dict }}
+{{- range where site.RegularPages "Section" "posts" }}
+  {{- $date := .Date.Format "2006-01-02" }}
+  {{- $activity = merge $activity (dict $date (add (index $activity $date | default 0) 1)) }}
+  {{- $lastmod := .Lastmod.Format "2006-01-02" }}
+  {{- if ne $lastmod $date }}
+    {{- $activity = merge $activity (dict $lastmod (add (index $activity $lastmod | default 0) 1)) }}
+  {{- end }}
+  {{- range .Params.history }}
+    {{- with .date }}
+      {{- if findRE `^\d{4}-\d{2}-\d{2}$` . }}
+        {{- $activity = merge $activity (dict . (add (index $activity . | default 0) 1)) }}
+      {{- end }}
+    {{- end }}
+  {{- end }}
+{{- end }}
+
+{{/* 年份去重后倒序，默认取最新年份 */}}
+{{- $yearList := slice }}
+{{- range $date, $count := $activity }}
+  {{- $year := int (substr $date 0 4) }}
+  {{- if not (in $yearList $year) }}{{ $yearList = $yearList | append $year }}{{ end }}
+{{- end }}
+{{- $years := slice }}
+{{- if $yearList }}
+  {{- $yearList = sort $yearList }}
+  {{- range seq (len $yearList) }}
+    {{- $years = $years | append (index $yearList (sub (len $yearList) .)) }}
+  {{- end }}
+{{- end }}
+
+{{/* 默认取默认年份中最近一个有活动的月份，没有则一月 */}}
+{{- $defaultYear := 0 }}
+{{- $defaultMonth := 1 }}
+{{- if $years }}
+  {{- $defaultYear = index $years 0 }}
+  {{- range $date, $count := $activity }}
+    {{- if hasPrefix $date (printf "%d-" $defaultYear) }}
+      {{- $month := int (substr $date 5 2) }}
+      {{- if and (gt $count 0) (gt $month $defaultMonth) }}{{ $defaultMonth = $month }}{{ end }}
+    {{- end }}
+  {{- end }}
+{{- end }}
+
+{{/* 月份名按当前语言取用，用 | 分隔以便一次维护 */}}
+{{- $months := split (T "heatmap.months") "|" }}
+<div class="heatmap-wrapper">
+  <div class="heatmap-header">
+    <div class="custom-select" data-select="year">
+      <button class="select-trigger" type="button">
+        <span class="select-value">{{ if $years }}{{ T "heatmap.year" $defaultYear }}{{ else }}--{{ end }}</span>
+        <span class="select-arrow"></span>
+      </button>
+      <ul class="dropdown-menu">
+        {{- range $years }}
+        <li class="dropdown-item{{ if eq . $defaultYear }} active{{ end }}" data-value="{{ . }}">{{ T "heatmap.year" . }}</li>
+        {{- end }}
+      </ul>
+    </div>
+
+    <h3 class="heatmap-title">{{ T "heatmap.title" }}</h3>
+
+    <div class="custom-select" data-select="month">
+      <button class="select-trigger" type="button">
+        <span class="select-value">{{ index $months (sub $defaultMonth 1) }}</span>
+        <span class="select-arrow"></span>
+      </button>
+      <ul class="dropdown-menu">
+        {{- range $i, $name := $months }}
+        <li class="dropdown-item{{ if eq (add $i 1) $defaultMonth }} active{{ end }}" data-value="{{ add $i 1 }}">{{ $name }}</li>
+        {{- end }}
+      </ul>
+    </div>
+  </div>
+
+  <div class="heatmap-content">
+    {{- if $years }}
+    <div class="heatmap-grid"></div>
+    {{- else }}
+    <div class="no-data">{{ T "heatmap.empty" }}</div>
+    {{- end }}
+  </div>
+
+  <div class="heatmap-legend">
+    <span class="legend-text">{{ T "heatmap.less" }}</span>
+    <div class="legend-cells">
+      <div class="legend-cell heatmap-lv0"></div>
+      <div class="legend-cell heatmap-lv1"></div>
+      <div class="legend-cell heatmap-lv2"></div>
+      <div class="legend-cell heatmap-lv3"></div>
+      <div class="legend-cell heatmap-lv4"></div>
+    </div>
+    <span class="legend-text">{{ T "heatmap.more" }}</span>
+  </div>
+</div>
+<script type="application/json" id="heatmap-data">{{ dict "years" $years "activity" $activity | jsonify | safeJS }}</script>

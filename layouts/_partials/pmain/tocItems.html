@@ -1,0 +1,9 @@
+{{- /* 递归展开 Hugo 的嵌套标题树，压平成带层级缩进的目录项；顶层虚拟节点 ID 为空，跳过 */ -}}
+{{- range .headings }}
+{{- if .ID }}
+<a class="toc-item" href="#{{ .ID }}" title="{{ .Title }}" style="padding-left: {{ add 6 (mul (sub .Level 1) 12) }}px">{{ .Title }}</a>
+{{- end }}
+{{- with .Headings }}
+{{- partial "pmain/tocItems.html" (dict "headings" .) }}
+{{- end }}
+{{- end }}

@@ -1,0 +1,125 @@
+# English strings. Keys mirror zh.toml, called from templates via T "key"
+
+# ---------- Header ----------
+"header.menu" = "Menu"
+"header.theme" = "Toggle theme"
+"header.immersive" = "Immersive reading"
+"header.music" = "Music"
+"header.language" = "Language"
+"search.placeholder" = "Search"
+"search.failed" = "Failed to load search index"
+"search.noResult" = 'No results for "{kw}"'
+"search.counter" = "{count} results"
+"search.category" = "Category"
+
+# ---------- Sidebar ----------
+"sidebar.avatar" = "Avatar"
+"sidebar.avatarAlt" = "Cnkrru's avatar"
+"sidebar.unknown" = "Unknown"
+"sidebar.stats" = "Stats"
+"sidebar.siteStats" = "Site stats"
+"sidebar.statsClose" = "Close"
+"sidebar.busuanzi" = "busuanzi"
+"sidebar.todayPv" = "Today views"
+"sidebar.todayUv" = "Today visitors"
+"sidebar.sitePv" = "Total views"
+"sidebar.siteUv" = "Total visitors"
+"sidebar.pagePv" = "Page views"
+"sidebar.pageUv" = "Page visitors"
+"sidebar.saying" = "Welcome to my blog"
+
+# ---------- Home ----------
+"home.welcome" = "Welcome to my blog"
+"home.read" = "Start reading"
+"home.about" = "About me"
+
+# ---------- Navigation ----------
+"nav.posts" = "Posts"
+"nav.about" = "About"
+"nav.category" = "Archive"
+"nav.tags" = "Tags"
+"nav.link" = "Links"
+
+# ---------- Music player ----------
+"music.cover" = "Cover"
+"music.close" = "Close"
+"music.prev" = "Previous"
+"music.play" = "Play/Pause"
+"music.next" = "Next"
+"music.mute" = "Mute"
+"music.list" = "Playlist ({{ . }})"
+"music.emptyTitle" = "No song selected"
+"music.emptyArtist" = "Unknown artist"
+"music.loading" = "Loading…"
+"music.loadFailed" = "Failed to load audio source"
+
+# ---------- TOC / Back to top ----------
+"toc.title" = "Contents"
+"toc.open" = "Open contents"
+"toc.heading" = "Table of contents"
+"toc.close" = "Close contents"
+"backtop.title" = "Back to top"
+
+# ---------- Post ----------
+"post.published" = "Published"
+"post.updated" = "Updated"
+"post.history" = "Changelog"
+"post.prev" = "Previous"
+"post.next" = "Next"
+"post.none" = "N/A"
+"post.words" = "Words"
+"post.readingTime" = "Reading time"
+"post.minutes" = "{{ . }} min"
+"post.share" = "Share this post"
+"post.wechatQr" = "WeChat share QR code"
+"post.copyLink" = "Copy link"
+"post.wechat" = "WeChat"
+"post.weibo" = "Weibo"
+"post.comment" = "Comments"
+"post.commentHint" = "Say something…"
+"post.commentFailed" = "Failed to load comments. Check your connection and refresh."
+"post.anchor" = "Link to this heading"
+
+# ---------- Archive / tags / links pages ----------
+"arch.category" = "Category"
+"arch.year" = "Year"
+"arch.month" = "Month"
+"arch.postsCount" = "{{ . }} posts"
+"arch.empty" = "No posts yet"
+"arch.emptyTags" = "No tags yet"
+"arch.uncategorized" = "Uncategorized"
+"tags.postsUnder" = 'Posts tagged "{tag}"'
+"link.prev" = "Previous"
+"link.next" = "Next"
+"link.category" = "Category"
+"link.pageInfo" = "Page 1 / {{ . }}"
+"link.currentCategory" = "Current category: {{ . }}"
+"link.empty" = "No links yet"
+"link.uncategorized" = "Uncategorized"
+
+# ---------- Home heatmap ----------
+"heatmap.title" = "Contribution Activity"
+"heatmap.months" = "January|February|March|April|May|June|July|August|September|October|November|December"
+"heatmap.year" = "{{ . }}"
+"heatmap.empty" = "No data"
+"heatmap.less" = "Less"
+"heatmap.more" = "More"
+
+# ---------- Admonition default titles ----------
+"admonition.tip" = "Tip"
+"admonition.info" = "Info"
+"admonition.warn" = "Warning"
+"admonition.error" = "Error"
+
+# ---------- Pagination ----------
+"pager.prev" = "Previous"
+"pager.next" = "Next"
+"pager.total" = "{{ . }} pages in total"
+
+# ---------- Footer ----------
+"footer.runtime" = "Blog running: %sd %sh %sm %ss"
+
+# ---------- 404 ----------
+"notfound.title" = "Page not found"
+"notfound.text" = "The page you visited may have been removed or the address is incorrect."
+"notfound.back" = "Back to home"

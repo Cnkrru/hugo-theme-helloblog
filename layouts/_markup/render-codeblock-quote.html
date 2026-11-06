@@ -1,0 +1,22 @@
+{{/* 引用卡：首行内容，次行 作者 | 出处（可省略） */}}
+{{- $lines := slice -}}
+{{- range split .Inner "\n" -}}
+  {{- $line := trim . " \t\r" -}}
+  {{- if $line -}}{{- $lines = $lines | append $line -}}{{- end -}}
+{{- end -}}
+{{- $body := "" -}}{{- $author := "" -}}{{- $source := "" -}}
+{{- if ge (len $lines) 1 -}}
+  {{- $body = index $lines 0 -}}
+{{- end -}}
+{{- if ge (len $lines) 2 -}}
+  {{- $fields := partial "components/splitRow.html" (index $lines 1) -}}
+  {{- if ge (len $fields) 1 -}}{{- $author = index $fields 0 -}}{{- end -}}
+  {{- if ge (len $fields) 2 -}}{{- $source = index $fields 1 -}}{{- end -}}
+{{- end -}}
+{{- $cite := "" -}}
+{{- if or $author $source -}}
+  {{- $cite = printf `<footer class="quote-cite">%s` (htmlEscape $author) -}}
+  {{- if $source -}}{{- $cite = printf `%s<cite class="quote-source">《%s》</cite>` $cite (htmlEscape $source) -}}{{- end -}}
+  {{- $cite = printf `%s</footer>` $cite -}}
+{{- end -}}
+<blockquote class="quote"><div class="quote-body">{{ htmlEscape $body }}</div>{{ $cite | safeHTML }}</blockquote>

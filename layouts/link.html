@@ -1,0 +1,51 @@
+{{/* 链接页：按分类分页展示 data/link.json，交互由 link.js 切换 */}}
+{{ define "main" }}
+{{- /* 多语言数据：优先 data/link-<lang>.json，无则回退 data/link.json */ -}}
+{{- $dataKey := printf "link-%s" site.Language.Lang }}
+{{- $links := index site.Data $dataKey | default site.Data.link | default (slice) }}
+{{- $groups := newScratch }}
+{{- $names := slice }}
+{{- range $links }}
+  {{- $name := .category | default (T "link.uncategorized") }}
+  {{- if not (in $names $name) }}{{ $names = $names | append $name }}{{ end }}
+  {{- $groups.Add $name (slice .) }}
+{{- end }}
+<div class="link-list">
+  <div class="list-area">
+    {{- range $i, $name := $names }}
+    <div class="link-grid{{ if eq $i 0 }} grid-on{{ end }}">
+      {{- range $groups.Get $name }}
+      <a class="link-card" href="{{ .url }}" target="_blank" rel="noopener noreferrer">
+        <div class="link-name">{{ .name }}</div>
+        <div class="link-des">{{ .description }}</div>
+      </a>
+      {{- end }}
+    </div>
+    {{- end }}
+    {{- if not $links }}
+    <div class="link-empty">{{ T "link.empty" }}</div>
+    {{- end }}
+  </div>
+
+  {{- if $links }}
+  <div class="btn-area">
+    <div class="pager-nav">
+      <button class="page-side" type="button" data-action="prev" disabled>{{ T "link.prev" }}</button>
+      {{- range $i, $name := $names }}
+      <button class="page-num{{ if eq $i 0 }} page-on{{ end }}" type="button" data-page="{{ add $i 1 }}">{{ $name }}</button>
+      {{- end }}
+      <button class="page-side" type="button" data-action="next"{{ if le (len $names) 1 }} disabled{{ end }}>{{ T "link.next" }}</button>
+      <div class="category-wrap">
+        <button class="page-side category-btn" type="button">{{ T "link.category" }} ▾</button>
+        <div class="dropdown-card">
+          {{- range $i, $name := $names }}
+          <button class="dropdown-item{{ if eq $i 0 }} dropdown-on{{ end }}" type="button" data-page="{{ add $i 1 }}">{{ $name }}</button>
+          {{- end }}
+        </div>
+      </div>
+    </div>
+    <div class="pager-info">{{ T "link.pageInfo" (len $names) }} · {{ T "link.currentCategory" (index $names 0) }}</div>
+  </div>
+  {{- end }}
+</div>
+{{ end }}

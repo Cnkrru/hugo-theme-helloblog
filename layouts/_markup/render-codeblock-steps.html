@@ -1,0 +1,15 @@
+{{/* 步骤条：每行 标题 | 描述（可省略），序号编译期生成 */}}
+{{- $items := "" -}}
+{{- range $i, $line := split .Inner "\n" -}}
+  {{- $line = trim $line " \t\r" -}}
+  {{- if $line -}}
+    {{- $fields := partial "components/splitRow.html" $line -}}
+    {{- $title := "" -}}{{- $desc := "" -}}
+    {{- if ge (len $fields) 1 -}}{{- $title = index $fields 0 -}}{{- end -}}
+    {{- if ge (len $fields) 2 -}}{{- $desc = index $fields 1 -}}{{- end -}}
+    {{- $item := printf `<div class="steps-item"><span class="steps-no">%d</span><div class="steps-body"><div class="steps-title">%s</div>` (add $i 1) (htmlEscape $title) -}}
+    {{- if $desc -}}{{- $item = printf `%s<div class="steps-desc">%s</div>` $item (htmlEscape $desc) -}}{{- end -}}
+    {{- $items = printf "%s%s</div></div>" $items $item -}}
+  {{- end -}}
+{{- end -}}
+<div class="steps">{{ $items | safeHTML }}</div>

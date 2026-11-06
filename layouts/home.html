@@ -1,0 +1,30 @@
+{{/* 首页：独立整屏，不套四区外壳 */}}
+{{ define "app" }}
+  {{/* 首页配置：构建期输出给 index.js，对应原 blog 的 config.ts */}}
+  {{- $index := site.Params.index | default (dict) }}
+  {{- $welcome := $index.welcome | default (slice (T "home.welcome")) }}
+  <script type="application/json" id="index-config">{{ dict
+      "welcome" $welcome
+      "increaseSpeed" ($index.increase_speed | default 60)
+      "decreaseSpeed" ($index.decrease_speed | default 40)
+      "loopSpeed" ($index.loop_speed | default 1000)
+      "particleDistance" ($index.particle_distance | default 180)
+    | jsonify | safeJS }}</script>
+  {{ partial "index/iEffect.html" . }}
+  <div class="index-page">
+    <div class="index-head">
+      {{ partial "index/iLogo.html" . }}
+      {{ partial "index/iNav.html" . }}
+    </div>
+    <div class="index-body">
+      {{ partial "index/iTypewrite.html" . }}
+      <div class="btn-list">
+        <a href="{{ "posts/" | relLangURL }}" class="btn btn-read">{{ T "home.read" }}</a>
+        <a href="{{ "about/" | relLangURL }}" class="btn btn-about">{{ T "home.about" }}</a>
+      </div>
+      <div class="glass-card">
+        {{ partial "index/iHitmap.html" . }}
+      </div>
+    </div>
+  </div>
+{{ end }}

@@ -1,0 +1,12 @@
+{{/* @tab 分节：返回 labels 与 bodies 两个切片；首个标记之前的内容丢弃，正文已去首尾空白 */}}
+{{- $pattern := "(?m)^@tab[\t ]+.+$" -}}
+{{- $labels := slice -}}
+{{- range findRE $pattern . -}}
+  {{- $labels = $labels | append (trim (replaceRE "^@tab[\t ]+" "" .) " \t\r") -}}
+{{- end -}}
+{{- $parts := split (replaceRE $pattern "@@PANEL@@" .) "@@PANEL@@" -}}
+{{- $bodies := slice -}}
+{{- range $i, $label := $labels -}}
+  {{- $bodies = $bodies | append (trim (index $parts (add $i 1)) " \t\r\n") -}}
+{{- end -}}
+{{- return (dict "labels" $labels "bodies" $bodies) -}}

@@ -1,0 +1,8 @@
+{{- /* 标题渲染钩子：沿用 Goldmark 生成的锚点 id，保留自定义属性，并在末尾补一个可聚焦的锚链接 */ -}}
+{{- $extra := "" -}}
+{{- range $k, $v := .Attributes -}}
+  {{- if ne $k "id" -}}
+    {{- $extra = printf "%s %s=\"%s\"" $extra $k (string $v | htmlEscape) -}}
+  {{- end -}}
+{{- end -}}
+<h{{ .Level }} id="{{ .Anchor }}"{{ $extra | safeHTMLAttr }}>{{ .Text | safeHTML }}<a class="heading-anchor" href="#{{ .Anchor | safeURL }}" aria-label="{{ T "post.anchor" }}" tabindex="-1">#</a></h{{ .Level }}>

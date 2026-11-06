@@ -1,0 +1,15 @@
+{{- /* 同分区上下篇：内置顺序按 date 降序，NextInSection 为更早一篇、PrevInSection 为更新一篇 */ -}}
+{{- $prev := .NextInSection -}}
+{{- $next := .PrevInSection -}}
+<div class="postnav-area">
+  <!-- 上一篇 -->
+  <a class="post-btn pre-post"{{ with $prev }} href="{{ .RelPermalink }}"{{ end }}>
+    <div class="post-label">{{ T "post.prev" }}</div>
+    <div class="post-title">{{ with $prev }}{{ .Title }}{{ else }}{{ T "post.none" }}{{ end }}</div>
+  </a>
+  <!-- 下一篇 -->
+  <a class="post-btn next-post"{{ with $next }} href="{{ .RelPermalink }}"{{ end }}>
+    <div class="post-label">{{ T "post.next" }}</div>
+    <div class="post-title">{{ with $next }}{{ .Title }}{{ else }}{{ T "post.none" }}{{ end }}</div>
+  </a>
+</div>

@@ -1,0 +1,16 @@
+{{/* 时间线：每行 时间 | 标题 | 描述（可省略），竖线由 CSS 绘制 */}}
+{{- $items := "" -}}
+{{- range split .Inner "\n" -}}
+  {{- $line := trim . " \t\r" -}}
+  {{- if $line -}}
+    {{- $fields := partial "components/splitRow.html" $line -}}
+    {{- $time := "" -}}{{- $title := "" -}}{{- $desc := "" -}}
+    {{- if ge (len $fields) 1 -}}{{- $time = index $fields 0 -}}{{- end -}}
+    {{- if ge (len $fields) 2 -}}{{- $title = index $fields 1 -}}{{- end -}}
+    {{- if ge (len $fields) 3 -}}{{- $desc = index $fields 2 -}}{{- end -}}
+    {{- $item := printf `<div class="timeline-item"><span class="timeline-dot"></span><div class="timeline-time">%s</div><div class="timeline-title">%s</div>` (htmlEscape $time) (htmlEscape $title) -}}
+    {{- if $desc -}}{{- $item = printf `%s<div class="timeline-desc">%s</div>` $item (htmlEscape $desc) -}}{{- end -}}
+    {{- $items = printf "%s%s</div>" $items $item -}}
+  {{- end -}}
+{{- end -}}
+<div class="timeline">{{ $items | safeHTML }}</div>

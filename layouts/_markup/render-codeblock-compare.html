@@ -1,0 +1,16 @@
+{{/* 对比双栏：@tab 分节，栏内每行一个条目 */}}
+{{- $data := partial "components/panels.html" .Inner -}}
+{{- $html := "" -}}
+{{- range $i, $label := $data.labels -}}
+  {{- $items := "" -}}
+  {{- range split (index $data.bodies $i) "\n" -}}
+    {{- $line := trim . " \t\r" -}}
+    {{- if $line -}}
+      {{- $items = printf `%s<li>%s</li>` $items (htmlEscape $line) -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $html = printf `%s<div class="compare-col"><div class="compare-head">%s</div><ul>%s</ul></div>` $html (htmlEscape $label) $items -}}
+{{- end -}}
+{{- if $html -}}
+<div class="compare">{{ $html | safeHTML }}</div>
+{{- end -}}

@@ -1,0 +1,5 @@
+{{/* 代码块顶栏：语言徽章（圆点 + 文本），与普通代码块同构，组件块不带复制按钮 */}}
+{{- $lang := . -}}
+<div class="code-toolbar">
+    <span class="lang lang-{{ $lang }}"><span class="lang-dot"></span><span class="lang-text">{{ $lang }}</span></span>
+</div>

@@ -1,0 +1,7 @@
+{{/* 字段切分：半角竖线分隔；\| 还原为字面竖线，首尾空白收敛，返回字符串切片 */}}
+{{- $raw := replace . "\\|" "@@PIPE@@" -}}
+{{- $fields := slice -}}
+{{- range split $raw "|" -}}
+  {{- $fields = $fields | append (trim (replace . "@@PIPE@@" "|") " \t") -}}
+{{- end -}}
+{{- return $fields -}}

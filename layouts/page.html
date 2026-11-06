@@ -1,0 +1,16 @@
+{{/* 文章页：状态条 → 发布/更新 → 正文 → 分享/上下篇/评论，桌面端目录另挂右侧 */}}
+{{ define "main" }}
+<div class="post-layout">
+  <div class="post-main">
+    {{ partial "pmain/postStatus.html" . }}
+    {{ partial "pmain/postEdit.html" . }}
+    {{ partial "pmain/content.html" . }}
+    <div class="end-components">
+      {{ partial "pmain/postShare.html" . }}
+      {{ partial "pmain/postNav.html" . }}
+      {{ partial "pmain/postComment.html" . }}
+    </div>
+  </div>
+  {{ partial "pmain/postToc.html" . }}
+</div>
+{{ end }}

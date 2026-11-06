@@ -1,0 +1,119 @@
+/* ====================<main.css>==================== */
+
+/* ============ 页面初始化 ============ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  width: 100%;
+  height: 100%;
+}
+
+/* body 关系到页面布局，不是从模板里抄来的 */
+body {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  position: relative;
+  z-index: 2;
+
+  background-color: var(--g-bg);
+  color: var(--g-text);
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+}
+
+/* #app 是真正的纵向容器：撑满视口，.center 吃剩余高度，页脚贴底 */
+#app {
+  min-height: 100%;
+
+  display: flex;
+  flex-direction: column;
+}
+
+#app > .center {
+  flex: 1;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+input,
+button,
+textarea,
+select {
+  border: none;
+  outline: none;
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+img {
+  vertical-align: middle;
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: normal;
+}
+
+hr {
+  margin: 0;
+  padding: 0;
+}
+
+/* ============ 链接悬停（主色 + 光晕） ============ */
+a:hover {
+  color: var(--g-color);
+  text-shadow: 0 0 8px color-mix(in srgb, var(--g-color) 25%, transparent);
+}
+
+/* ============ 全局滚动条 ============ */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--g-color), var(--g-hover));
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.3);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--g-gradient);
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--g-color) transparent;
+}

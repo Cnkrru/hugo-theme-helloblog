@@ -1,0 +1,14 @@
+{{/* 折叠块：首行作标题（缺省「详情」），其余为正文，正文整体转义并保留换行 */}}
+{{- $parts := split (trim .Inner "\r\n") "\n" -}}
+{{- $summary := "" -}}{{- $body := "" -}}
+{{- if ge (len $parts) 1 -}}
+  {{- $summary = trim (index $parts 0) " \t\r" -}}
+{{- end -}}
+{{- if gt (len $parts) 1 -}}
+  {{- $body = trim (delimit (after 1 $parts) "\n") " \t\r\n" -}}
+{{- end -}}
+{{- if not $summary -}}{{- $summary = "详情" -}}{{- end -}}
+<details class="details">
+    <summary>{{ htmlEscape $summary }}</summary>
+    <div class="details-body">{{ htmlEscape $body }}</div>
+</details>

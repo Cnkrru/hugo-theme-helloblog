@@ -1,0 +1,38 @@
+{{/* 标签页：标签云 + 原地筛选的文章时间线 */}}
+{{ define "main" }}
+{{- $posts := sort (where site.RegularPages "Section" "posts") "Date" "desc" }}
+{{- $tagSet := slice }}
+{{- range $posts }}
+  {{- range .Params.tags }}
+    {{- if not (in $tagSet .) }}{{ $tagSet = $tagSet | append . }}{{ end }}
+  {{- end }}
+{{- end }}
+{{- $tagSet = sort $tagSet }}
+<div class="tag-list" data-title="{{ T "tags.postsUnder" }}">
+  {{- if $tagSet }}
+  <div class="cloud-area">
+    {{- range $tagSet }}
+    <button class="cloud-tag" type="button" data-tag="{{ . }}">{{ . }}</button>
+    {{- end }}
+  </div>
+
+  <div class="timeline-area" hidden>
+    <div class="tl-bar">
+      <span class="tl-title"></span>
+    </div>
+    <div class="tl-body">
+      {{- range $posts }}
+      {{- $postTags := .Params.tags | default (slice) }}
+      <a class="tl-item" href="{{ .RelPermalink }}" data-tags="{{ $postTags | jsonify }}" hidden>
+        <span class="tl-dot"></span>
+        <span class="tl-item-title">{{ .Title }}</span>
+        <span class="tl-item-date">{{ .Date.Format "2006-01-02" }}</span>
+      </a>
+      {{- end }}
+    </div>
+  </div>
+  {{- else }}
+  <div class="arch-empty">{{ T "arch.emptyTags" }}</div>
+  {{- end }}
+</div>
+{{ end }}

@@ -1,0 +1,23 @@
+{{/* 简易流程：每行 节点 | 可选说明，节点之间自动向下箭头 */}}
+{{- $arrow := `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg>` -}}
+{{- $lines := slice -}}
+{{- range split .Inner "\n" -}}
+  {{- $line := trim . " \t\r" -}}
+  {{- if $line -}}{{- $lines = $lines | append $line -}}{{- end -}}
+{{- end -}}
+{{- $total := len $lines -}}
+{{- $items := "" -}}
+{{- range $i, $line := $lines -}}
+  {{- $fields := partial "components/splitRow.html" $line -}}
+  {{- $text := "" -}}{{- $sub := "" -}}
+  {{- if ge (len $fields) 1 -}}{{- $text = index $fields 0 -}}{{- end -}}
+  {{- if ge (len $fields) 2 -}}{{- $sub = index $fields 1 -}}{{- end -}}
+  {{- $item := printf `<div class="flow-node"><div class="flow-text">%s</div>` (htmlEscape $text) -}}
+  {{- if $sub -}}{{- $item = printf `%s<div class="flow-sub">%s</div>` $item (htmlEscape $sub) -}}{{- end -}}
+  {{- $item = printf `%s</div>` $item -}}
+  {{- if lt (add $i 1) $total -}}
+    {{- $item = printf `%s<div class="flow-arrow">%s</div>` $item $arrow -}}
+  {{- end -}}
+  {{- $items = printf "%s%s" $items $item -}}
+{{- end -}}
+<div class="flow">{{ $items | safeHTML }}</div>

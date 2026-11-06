@@ -1,0 +1,29 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{{- $title := cond .IsHome site.Title (printf "%s | %s" .Title site.Title) }}
+<title>{{ $title }}</title>
+{{- $desc := .Description | default site.Params.description }}
+{{- with $desc }}<meta name="description" content="{{ . }}">
+{{ end -}}
+{{- $kw := .Params.keywords | default site.Params.keywords }}
+{{- with $kw }}<meta name="keywords" content="{{ if reflect.IsSlice . }}{{ delimit . ", " }}{{ else }}{{ . }}{{ end }}">
+{{ end -}}
+{{- if eq .Kind "404" }}
+<meta name="robots" content="noindex">
+{{- else }}
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="{{ .Permalink }}">
+{{- end }}
+{{- range .AllTranslations }}
+<link rel="alternate" hreflang="{{ .Language.LanguageCode | default .Language.Lang }}" href="{{ .Permalink }}">
+{{- end }}
+{{- with site.Home.OutputFormats.Get "rss" }}
+<link rel="alternate" type="{{ .MediaType.Type }}" href="{{ .Permalink }}" title="{{ site.Title }}">
+{{- end }}
+<link rel="icon" href="{{ "favicon.ico" | relURL }}">
+{{ partial "opengraph.html" . }}
+{{ partial "twitter_cards.html" . }}
+{{ partial "schema.html" . }}
+{{ partial "head/css.html" . }}
+  {{ partial "head/background.html" . }}
+  {{ partial "head/js.html" . }}

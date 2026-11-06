@@ -1,0 +1,4 @@
+{{/* 行内徽章：{{< badge "v1.0" >}} → <span class="badge">v1.0</span>，官方 shortcode 做法 */}}
+{{- with .Get 0 -}}
+<span class="badge">{{ htmlEscape . }}</span>
+{{- end -}}

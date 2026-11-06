@@ -1,0 +1,4 @@
+{{/* 打字机：静态首帧，逐字动画等 JS 接管；文案取 params.index.welcome，未配置则用 i18n */}}
+{{- $index := site.Params.index | default (dict) }}
+{{- $welcome := $index.welcome | default (slice (T "home.welcome")) }}
+<div class="welcome">{{ index $welcome 0 }}</div>

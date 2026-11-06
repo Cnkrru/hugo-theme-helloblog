@@ -1,0 +1,13 @@
+{{/* 问答：每行 问题 | 答案，答案默认折叠（原生 details） */}}
+{{- $items := "" -}}
+{{- range split .Inner "\n" -}}
+  {{- $line := trim . " \t\r" -}}
+  {{- if $line -}}
+    {{- $fields := partial "components/splitRow.html" $line -}}
+    {{- $q := "" -}}{{- $a := "" -}}
+    {{- if ge (len $fields) 1 -}}{{- $q = index $fields 0 -}}{{- end -}}
+    {{- if ge (len $fields) 2 -}}{{- $a = index $fields 1 -}}{{- end -}}
+    {{- $items = printf `%s<details class="qa-item"><summary class="qa-q"><span class="qa-badge">Q</span>%s</summary><div class="qa-a"><span class="qa-badge qa-badge-a">A</span>%s</div></details>` $items (htmlEscape $q) (htmlEscape $a) -}}
+  {{- end -}}
+{{- end -}}
+<div class="qa">{{ $items | safeHTML }}</div>

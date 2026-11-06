@@ -1,0 +1,7 @@
+# Hugo 构建产物
+public/
+resources/
+.hugo_build.lock
+
+# 临时目录与测试截图
+temp-*/

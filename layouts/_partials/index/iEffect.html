@@ -1,0 +1,5 @@
+{{/* 粒子背景画布：尺寸与绘制全部由 JS 接管，这里只留画布节点；params.index.particle_enable 可关闭 */}}
+{{- $index := site.Params.index | default (dict) }}
+{{- if ne $index.particle_enable false }}
+<canvas class="particle-canvas"></canvas>
+{{- end }}

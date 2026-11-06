@@ -1,0 +1,39 @@
+{{- with site.Params.giscus }}
+{{- if .enable }}
+<div class="comment">
+  <p class="comment-head">{{ T "post.comment" }}</p>
+  <p class="comment-text">{{ T "post.commentHint" }}</p>
+  <div class="comment-box comment-box-loading" aria-busy="true">
+    <div class="giscus"
+      data-script="{{ (resources.Get "vendor/giscus.js").RelPermalink }}"
+      data-theme-base="{{ "css" | relURL }}"
+      data-color-theme="{{ site.Params.color_theme | default "sakura" }}"
+      data-repo="{{ .repo }}"
+      data-repo-id="{{ .repo_id }}"
+      data-category="{{ .category }}"
+      data-category-id="{{ .category_id }}"
+      data-mapping="{{ .mapping | default "pathname" }}"
+      data-strict="{{ .strict | default "0" }}"
+      data-reactions-enabled="{{ .reactions_enabled | default "1" }}"
+      data-emit-metadata="{{ .emit_metadata | default "0" }}"
+      data-input-position="{{ .input_position | default "bottom" }}"
+      data-lang="{{ .lang | default (cond (eq site.Language.Lang "zh") "zh-CN" site.Language.Lang) }}"></div>
+
+    <!-- 加载态骨架：覆盖在未就绪的 iframe 上，widget 本身保持挂载 -->
+    <div class="comment-skeleton" aria-hidden="true">
+      <div class="comment-skeleton-head">
+        <span class="comment-skeleton-avatar"></span>
+        <div class="comment-skeleton-lines">
+          <span class="comment-skeleton-line comment-skeleton-line-long"></span>
+          <span class="comment-skeleton-line comment-skeleton-line-short"></span>
+        </div>
+      </div>
+      <div class="comment-skeleton-input"></div>
+    </div>
+
+    <!-- 脚本加载失败时的可操作提示 -->
+    <p class="comment-failed" hidden>{{ T "post.commentFailed" }}</p>
+  </div>
+</div>
+{{- end }}
+{{- end }}

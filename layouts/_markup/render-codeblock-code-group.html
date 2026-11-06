@@ -1,0 +1,15 @@
+{{/* 代码组：@tab 分节，标签名即语言名走编译期高亮，切换复用 tabs 的纯 CSS radio */}}
+{{- $data := partial "components/panels.html" .Inner -}}
+{{- $group := printf "cg-%d" .Ordinal -}}
+{{- $out := "" -}}
+{{- range $i, $label := $data.labels -}}
+  {{- $lang := lower $label -}}
+  {{- $attrLang := replaceRE "[^\\w-]" "" $lang -}}
+  {{- if not $attrLang -}}{{- $attrLang = "text" -}}{{- end -}}
+  {{- $checked := cond (eq $i 0) " checked" "" -}}
+  {{- $code := transform.Highlight (index $data.bodies $i) $lang (dict) -}}
+  {{- $out = printf `%s<label class="tabs-tab"><input type="radio" id="%s-%d" name="%s"%s>%s</label><div class="tabs-panel code-group-panel" data-panel="%s-%d"><div class="language-%s">%s</div></div>` $out $group $i $group $checked (htmlEscape $label) $group $i $attrLang $code -}}
+{{- end -}}
+{{- if $out -}}
+<div class="tabs code-group">{{ $out | safeHTML }}</div>
+{{- end -}}

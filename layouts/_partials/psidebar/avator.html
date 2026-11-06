@@ -1,0 +1,5 @@
+{{/* 头像：取自 static 目录，路径由 params.avatar 指定 */}}
+{{- $src := site.Params.avatar | default "avator.webp" }}
+<div class="avator">
+  <img src="{{ $src | relURL }}" alt="{{ T "sidebar.avatarAlt" }}" loading="lazy" title="{{ T "sidebar.avatar" }}" />
+</div>

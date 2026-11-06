@@ -1,0 +1,5 @@
+<nav class="index-nav">
+  {{- range site.Menus.main }}
+  <a class="nav-element" href="{{ .URL | relLangURL }}">{{ or (T .Identifier) .Name }}</a>
+  {{- end }}
+</nav>

@@ -1,0 +1,57 @@
+{{/* 栏目列表页：文章卡片网格 + 服务端分页（每页数量走 [pagination].pagerSize） */}}
+{{ define "main" }}
+{{- $paginator := .Paginate .RegularPages }}
+<div class="post-list">
+  <div class="list-area">
+    <div class="card-grid">
+      {{- range $paginator.Pages }}
+      <a class="post-card" href="{{ .RelPermalink }}">
+        {{- with .Params.category }}
+        <span class="post-card-category">{{ . }}</span>
+        {{- end }}
+        <h2 class="post-card-title">{{ .Title }}</h2>
+        <div class="post-card-meta">
+          {{- with .Params.tags }}
+          <div class="post-card-tags">
+            {{- range first 1 . }}
+            <span class="post-card-tag">{{ . }}</span>
+            {{- end }}
+          </div>
+          {{- end }}
+          <time class="post-card-date">{{ .Date.Format "2006-01-02" }}</time>
+        </div>
+      </a>
+      {{- end }}
+    </div>
+  </div>
+  <div class="btn-area">
+    <div class="pager-nav">
+      {{- if $paginator.HasPrev }}
+      <a class="page-side" href="{{ $paginator.Prev.URL }}">{{ T "pager.prev" }}</a>
+      {{- else }}
+      <span class="page-side page-disabled">{{ T "pager.prev" }}</span>
+      {{- end }}
+      {{- $current := $paginator.PageNumber }}
+      {{- $total := $paginator.TotalPages }}
+      {{- $start := sub $current 2 }}
+      {{- if lt $start 1 }}{{ $start = 1 }}{{ end }}
+      {{- $end := add $start 4 }}
+      {{- if gt $end $total }}{{ $end = $total }}{{ end }}
+      {{- if lt (sub $end $start) 4 }}
+      {{- $start = sub $end 4 }}
+      {{- if lt $start 1 }}{{ $start = 1 }}{{ end }}
+      {{- end }}
+      {{- range seq $start $end }}
+      {{- $pager := index $paginator.Pagers (sub . 1) }}
+      <a class="page-num{{ if eq . $current }} page-on{{ end }}" href="{{ $pager.URL }}">{{ . }}</a>
+      {{- end }}
+      {{- if $paginator.HasNext }}
+      <a class="page-side" href="{{ $paginator.Next.URL }}">{{ T "pager.next" }}</a>
+      {{- else }}
+      <span class="page-side page-disabled">{{ T "pager.next" }}</span>
+      {{- end }}
+    </div>
+    <div class="pager-info">{{ T "pager.total" $total }}</div>
+  </div>
+</div>
+{{ end }}

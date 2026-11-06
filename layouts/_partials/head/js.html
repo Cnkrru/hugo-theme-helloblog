@@ -1,0 +1,33 @@
+{{- with resources.Get "js/main.js" }}
+  {{- $opts := dict
+    "minify" (not hugo.IsDevelopment)
+    "sourceMap" (cond hugo.IsDevelopment "external" "")
+    "targetPath" "js/main.js"
+  }}
+  {{- with . | js.Build $opts }}
+    {{- if hugo.IsDevelopment }}
+      <script src="{{ .RelPermalink }}" defer></script>
+    {{- else }}
+      {{- with . | fingerprint }}
+        <script src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous" defer></script>
+      {{- end }}
+    {{- end }}
+  {{- end }}
+{{- end }}
+
+{{/* 搜索模块单独打包：main.js 在首次聚焦搜索框时按 meta 里的地址动态加载 */}}
+{{- with resources.Get "js/pamin/search.js" }}
+  {{- $opts := dict
+    "minify" (not hugo.IsDevelopment)
+    "sourceMap" (cond hugo.IsDevelopment "external" "")
+    "targetPath" "js/search.js"
+    "format" "esm"
+  }}
+  {{- with . | js.Build $opts }}
+    {{- $search := . }}
+    {{- if not hugo.IsDevelopment }}
+      {{- $search = . | fingerprint }}
+    {{- end }}
+    <meta name="search-script" content="{{ $search.RelPermalink }}">
+  {{- end }}
+{{- end }}

@@ -1,0 +1,15 @@
+{{- /* 图片渲染钩子：页面资源直接取指纹地址与宽高，其余图片补懒加载 */ -}}
+{{- $dest := .Destination -}}
+{{- $src := $dest -}}
+{{- $w := 0 -}}
+{{- $h := 0 -}}
+{{- if not (or (strings.HasPrefix $dest "http://") (strings.HasPrefix $dest "https://") (strings.HasPrefix $dest "/")) -}}
+  {{- with .Page.Resources.GetMatch $dest -}}
+    {{- if and (eq .ResourceType "image") (ne .MediaType.SubType "svg") -}}
+      {{- $src = .RelPermalink -}}
+      {{- $w = .Width -}}
+      {{- $h = .Height -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+<img src="{{ $src | safeURL }}" alt="{{ .Text }}"{{ with .Title }} title="{{ . }}"{{ end }}{{ if $w }} width="{{ $w }}" height="{{ $h }}"{{ end }} loading="lazy" decoding="async">

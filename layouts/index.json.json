@@ -1,0 +1,13 @@
+{{- /* 首页 JSON 输出：供前端搜索异步加载，避免把索引内联进每个页面 */ -}}
+{{- $docs := slice }}
+{{- range where site.RegularPages "Section" "posts" }}
+  {{- $docs = $docs | append (dict
+    "id" .RelPermalink
+    "url" .RelPermalink
+    "title" .Title
+    "category" (.Params.category | default "")
+    "tags" (.Params.tags | default (slice))
+    "date" (.Date.Format "2006-01-02")
+  ) }}
+{{- end }}
+{{- $docs | jsonify }}

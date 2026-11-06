@@ -1,0 +1,13 @@
+{{- if .Fragments.Headings }}
+{{/* 桌面常驻目录：sticky 吸在 .main 顶部，与正文构成两栏 */}}
+<aside class="toc-sidebar">
+  <div class="toc-box">
+    <div class="toc-head">
+      <span>{{ T "toc.title" }}</span>
+    </div>
+    <div class="toc-list">
+      {{- partial "pmain/tocItems.html" (dict "headings" .Fragments.Headings) }}
+    </div>
+  </div>
+</aside>
+{{- end }}

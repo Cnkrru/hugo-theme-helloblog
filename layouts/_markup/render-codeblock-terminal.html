@@ -1,0 +1,21 @@
+{{/* 终端窗口：$ 开头的行按命令渲染，其余按输出渲染，Mac 三色圆点顶栏 */}}
+{{- $rows := "" -}}
+{{- range split .Inner "\n" -}}
+  {{- $line := strings.TrimRight " \t\r" . -}}
+  {{- if trim $line " \t\r" -}}
+    {{- if hasPrefix $line "$ " -}}
+      {{- $rows = printf `%s<div class="terminal-line terminal-cmd"><span class="terminal-prompt">$</span> %s</div>` $rows (htmlEscape (index (split $line "$ ") 1)) -}}
+    {{- else -}}
+      {{- $rows = printf `%s<div class="terminal-line">%s</div>` $rows (htmlEscape $line) -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+<div class="terminal">
+    <div class="terminal-bar">
+        <span class="terminal-dot dot-red"></span>
+        <span class="terminal-dot dot-yellow"></span>
+        <span class="terminal-dot dot-green"></span>
+        <span class="terminal-title">terminal</span>
+    </div>
+    <div class="terminal-body">{{ $rows | safeHTML }}</div>
+</div>

@@ -1,0 +1,81 @@
+{{/* 归档页：分类 / 年份 / 月份三种视图，服务端渲染全部分组 */}}
+{{ define "main" }}
+{{- $posts := sort (where site.RegularPages "Section" "posts") "Date" "desc" }}
+
+{{/* 分类分组 */}}
+{{- $groups := newScratch }}
+{{- $names := slice }}
+{{- range $posts }}
+  {{- $name := .Params.category | default (T "arch.uncategorized") }}
+  {{- if not (in $names $name) }}{{ $names = $names | append $name }}{{ end }}
+  {{- $groups.Add $name (slice .) }}
+{{- end }}
+{{- $categoryGroups := slice }}
+{{- range sort $names }}
+  {{- $categoryGroups = $categoryGroups | append (dict "name" . "pages" ($groups.Get .)) }}
+{{- end }}
+
+{{/* 年份分组 */}}
+{{- $yearGroups := slice }}
+{{- range $posts.GroupByDate "2006" }}
+  {{- $yearGroups = $yearGroups | append (dict "name" .Key "pages" .Pages) }}
+{{- end }}
+
+{{/* 月份分组 */}}
+{{- $monthGroups := slice }}
+{{- range $posts.GroupByDate "2006-01" }}
+  {{- $monthGroups = $monthGroups | append (dict "name" .Key "pages" .Pages) }}
+{{- end }}
+
+{{- $views := slice
+  (dict "key" "category" "groups" $categoryGroups)
+  (dict "key" "year" "groups" $yearGroups)
+  (dict "key" "month" "groups" $monthGroups)
+}}
+<div class="archive-list">
+  <div class="tool-area">
+    <div class="view-tabs" role="tablist">
+      <button type="button" class="view-tab tab-on" data-view="category">{{ T "arch.category" }}</button>
+      <button type="button" class="view-tab" data-view="year">{{ T "arch.year" }}</button>
+      <button type="button" class="view-tab" data-view="month">{{ T "arch.month" }}</button>
+    </div>
+  </div>
+
+  <div class="list-area">
+    {{- range $i, $view := $views }}
+    <div class="arch-view{{ if eq $i 0 }} view-on{{ end }}" data-view="{{ $view.key }}">
+      {{- range $view.groups }}
+      <div class="arch-group">
+        <button type="button" class="group-header">
+          <span class="group-name">{{ .name }}</span>
+          <span class="group-count">{{ T "arch.postsCount" (len .pages) }}</span>
+          <span class="group-arrow">▾</span>
+        </button>
+        <div class="group-body">
+          <div class="group-list">
+            {{- range .pages }}
+            <a class="group-item" href="{{ .RelPermalink }}">
+              <span class="item-title">{{ .Title }}</span>
+              {{- with .Params.tags }}
+              <span class="item-tags">
+                {{- range first 2 . }}
+                <span class="item-tag">{{ . }}</span>
+                {{- end }}
+              </span>
+              {{- end }}
+              <span class="item-date">{{ .Date.Format "2006-01-02" }}</span>
+            </a>
+            {{- end }}
+          </div>
+        </div>
+      </div>
+      {{- end }}
+    </div>
+    {{- end }}
+
+    {{- if not $posts }}
+    <div class="arch-empty">{{ T "arch.empty" }}</div>
+    {{- end }}
+  </div>
+</div>
+{{ end }}
