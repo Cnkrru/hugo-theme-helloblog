@@ -1,0 +1,161 @@
+# 示例站点配置：在 exampleSite 目录下执行 hugo server 即可预览
+# 主题根就是仓库根，用 module 导入上层目录，不依赖仓库文件夹名
+baseURL = 'https://example.org/'
+languageCode = 'zh-cn'
+title = 'Helloblog'
+timeZone = 'Asia/Shanghai'
+copyright = '2026 Helloblog, power by Hugo, All rights reserved'
+
+# 默认语言直接挂在根路径，英文站挂 /en/ 子目录
+defaultContentLanguage = 'zh'
+defaultContentLanguageInSubdir = false
+
+# Hugo 生成 robots.txt，主题提供带 Sitemap 指向的模板
+enableRobotsTXT = true
+
+# 标签只在 /tags/ 原地筛选，不生成 /tags/<term>/ 详情页
+disableKinds = ['term']
+
+# 首页额外输出 index.json，供前端搜索异步加载
+[outputs]
+  home = ['html', 'rss', 'json']
+
+# 列表页每页条数
+[pagination]
+  pagerSize = 6
+
+# RSS 条目上限
+[services.rss]
+  limit = 20
+
+# 图片处理：统一画质与重采样算法
+[imaging]
+  quality = 85
+  resampleFilter = 'Lanczos'
+
+# sitemap 抓取提示
+[sitemap]
+  changefreq = 'weekly'
+  priority = 0.5
+
+# 分类是 /category/ 归档页（按 category 字段分组），只保留标签 taxonomy
+[taxonomies]
+  tag = 'tags'
+
+# 导航菜单：identifier 复用 i18n 的 nav.* 文案，url 用相对路径以适配多语言前缀
+[[menus.main]]
+  identifier = 'nav.posts'
+  name = '文章'
+  url = 'posts/'
+  weight = 1
+[[menus.main]]
+  identifier = 'nav.about'
+  name = '关于'
+  url = 'about/'
+  weight = 2
+[[menus.main]]
+  identifier = 'nav.category'
+  name = '归档'
+  url = 'category/'
+  weight = 3
+[[menus.main]]
+  identifier = 'nav.tags'
+  name = '标签'
+  url = 'tags/'
+  weight = 4
+[[menus.main]]
+  identifier = 'nav.link'
+  name = '友链'
+  url = 'link/'
+  weight = 5
+
+# 行内高亮 ==重点==：Goldmark 官方 mark 扩展
+[markup.goldmark.extensions]
+  [markup.goldmark.extensions.extras.mark]
+    enable = true
+
+# 挂载上层主题目录：仓库根即主题根，因此用相对路径挂载，不依赖仓库文件夹名
+[module]
+  [[module.mounts]]
+    source = '../layouts'
+    target = 'layouts'
+  [[module.mounts]]
+    source = '../assets'
+    target = 'assets'
+  [[module.mounts]]
+    source = '../static'
+    target = 'static'
+  [[module.mounts]]
+    source = '../i18n'
+    target = 'i18n'
+  [[module.mounts]]
+    source = '../archetypes'
+    target = 'archetypes'
+  [[module.mounts]]
+    source = 'content'
+    target = 'content'
+  [[module.mounts]]
+    source = 'data'
+    target = 'data'
+
+[params]
+  # SEO 兜底，页面 front matter 中的 description / keywords 优先
+  description = 'Helloblog 示例站点，演示主题的全部配置项。'
+  keywords = ['Hugo', 'blog', 'helloblog']
+  images = ['og-cover.png']  # Open Graph 默认封面，相对 static 目录
+
+  color_theme = 'sakura'  # 配色：sakura / purple / ink / cyan / blue
+  glass_opacity = 0.5     # 玻璃拟态透明度 0~1
+  siteage = '2026-10-04'  # 建站日期，格式 YYYY-MM-DD，用于页脚运行天数
+  avatar = 'avator.webp'  # 侧栏头像，相对 static 目录
+  saying = ''             # 侧栏一句话，留空则用 i18n 的 sidebar.saying
+
+  # 首页配置
+  [params.index]
+    logo = 'Helloblog'            # 首页大标题，留空则用 site.Title
+    welcome = ['Hello, world', '欢迎来到示例站点']
+    increase_speed = 60           # 打字间隔（毫秒）
+    decrease_speed = 40           # 删除间隔（毫秒）
+    loop_speed = 1000             # 句子切换前停顿（毫秒）
+    particle_enable = true        # 粒子背景开关
+    particle_distance = 180       # 粒子连线距离阈值
+
+  # 背景图，相对 static 目录
+  [params.background]
+    enable = true
+    image = 'background.webp'
+    overlay_dark = 0.6            # 暗色遮罩浓度
+    overlay_light = 0.5           # 亮色遮罩浓度
+
+  # 评论：示例站关闭，避免依赖真实仓库；启用时填入自己的 giscus 配置
+  [params.giscus]
+    enable = false
+    repo = 'owner/repo'
+    repo_id = ''
+    category = 'General'
+    category_id = ''
+    mapping = 'pathname'
+    strict = '0'
+    reactions_enabled = '1'
+    emit_metadata = '0'
+    input_position = 'bottom'
+
+# 多语言配置放在文件末尾：TOML 表头会接管后续键，避免把上方顶层键吞进语言表
+[languages]
+  [languages.zh]
+    languageName = '中文'
+    languageCode = 'zh-cn'
+    weight = 1
+  [languages.en]
+    languageName = 'English'
+    languageCode = 'en'
+    weight = 2
+
+    # 英文站点 SEO 兜底
+    [languages.en.params]
+      description = "Helloblog example site, demonstrating every theme option."
+      keywords = ['Hugo', 'blog', 'example']
+
+    # 英文首页打字机文案，覆盖 params.index.welcome
+    [languages.en.params.index]
+      welcome = ['Hello, world']
