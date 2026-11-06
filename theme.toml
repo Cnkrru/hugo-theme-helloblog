@@ -1,8 +1,8 @@
 name = 'helloblog'
 license = 'MIT'
-licenselink = 'https://github.com/Cnkrru/hugo-theme-hello/blob/main/LICENSE'
+licenselink = 'https://github.com/Cnkrru/hugo-theme-helloblog/blob/main/LICENSE'
 description = 'A glassmorphism personal blog theme with multilingual support, dark mode, local search and rich Markdown components.'
-homepage = 'https://github.com/Cnkrru/hugo-theme-hello'
+homepage = 'https://github.com/Cnkrru/hugo-theme-helloblog'
 demosite = ''  # 发布前填入已部署的示例站地址
 tags = ['blog', 'personal', 'multilingual', 'dark mode', 'glassmorphism', 'search']
 features = ['blog', 'multilingual', 'dark mode', 'search', 'taxonomies', 'responsive', 'i18n']

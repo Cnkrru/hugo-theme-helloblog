@@ -2,6 +2,8 @@
 
 [English](README.md) | 简体中文
 
+![helloblog 主题截图](https://raw.githubusercontent.com/Cnkrru/hugo-theme-helloblog/main/images/screenshot.png)
+
 一个玻璃拟态风格的 Hugo 个人博客主题，移植自 Cnkrru 的 Vue 博客。支持中英双语、明暗主题、本地搜索、文章目录、阅读进度、音乐播放器、不蒜子统计、giscus 评论，以及一套 Markdown 扩展组件（提示块、时间线、流程图、代码组等）。
 
 ## 环境要求

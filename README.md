@@ -2,6 +2,8 @@
 
 English | [简体中文](README.zh-CN.md)
 
+![helloblog screenshot](https://raw.githubusercontent.com/Cnkrru/hugo-theme-helloblog/main/images/screenshot.png)
+
 A glassmorphism personal blog theme for Hugo, ported from Cnkrru's Vue blog. It ships with bilingual content support, light/dark themes, local search, table of contents, reading progress, a music player, Busuanzi analytics, giscus comments, and a set of Markdown writing components (admonitions, timeline, flow, code groups and more).
 
 ## Requirements
