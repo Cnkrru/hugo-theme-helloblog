@@ -25,7 +25,7 @@ draft: false
 | 站点 `hugo.toml` | 你自己的站点配置 | 必须写 |
 | `exampleSite/hugo.toml` | 示例站配置，含仓库自测用的挂载 | 只作参考 |
 
-```warn
+```warning
 不要把 exampleSite/hugo.toml 整份复制到自己的站点。它的 [module] 段挂载的是 ../layouts、../assets 这些上层目录，只有「仓库根就是主题」的结构才成立。主题安装到 themes/helloblog 后这些路径不存在，构建会直接失败。
 ```
 
@@ -58,7 +58,7 @@ disableKinds = ['term']
   tag = 'tags'
 ```
 
-```warn
+```warning
 outputs.home 必须包含 json。少了它，搜索会静默失效，页面不报错但没有任何结果。
 ```
 

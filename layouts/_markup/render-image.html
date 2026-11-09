@@ -1,15 +1,21 @@
-{{- /* 图片渲染钩子：页面资源直接取指纹地址与宽高，其余图片补懒加载 */ -}}
+{{- /* 图片渲染钩子：页面资源取指纹地址与宽高，超过 800px 时额外生成小图供 srcset 选源 */ -}}
 {{- $dest := .Destination -}}
 {{- $src := $dest -}}
+{{- $srcset := "" -}}
 {{- $w := 0 -}}
 {{- $h := 0 -}}
 {{- if not (or (strings.HasPrefix $dest "http://") (strings.HasPrefix $dest "https://") (strings.HasPrefix $dest "/")) -}}
-  {{- with .Page.Resources.GetMatch $dest -}}
+  {{- /* ./img.png 这种写法在 GetMatch 里不认，先去掉前导 ./ */ -}}
+  {{- with .Page.Resources.GetMatch (strings.TrimPrefix "./" $dest) -}}
     {{- if and (eq .ResourceType "image") (ne .MediaType.SubType "svg") -}}
       {{- $src = .RelPermalink -}}
       {{- $w = .Width -}}
       {{- $h = .Height -}}
+      {{- if gt .Width 800 -}}
+        {{- $small := .Resize "800x" -}}
+        {{- $srcset = printf "%s 800w, %s %dw" $small.RelPermalink $src $w -}}
+      {{- end -}}
     {{- end -}}
   {{- end -}}
 {{- end -}}
-<img src="{{ $src | safeURL }}" alt="{{ .Text }}"{{ with .Title }} title="{{ . }}"{{ end }}{{ if $w }} width="{{ $w }}" height="{{ $h }}"{{ end }} loading="lazy" decoding="async">
+<img src="{{ $src | safeURL }}" alt="{{ .Text }}"{{ with .Title }} title="{{ . }}"{{ end }}{{ if $w }} width="{{ $w }}" height="{{ $h }}"{{ end }}{{ with $srcset }} srcset="{{ . }}" sizes="(max-width: 768px) 100vw, 85vw"{{ end }} loading="lazy" decoding="async">

@@ -11,7 +11,7 @@
       "particleDistance" ($index.particle_distance | default 180)
     | jsonify | safeJS }}</script>
   {{ partial "index/iEffect.html" . }}
-  <div class="index-page">
+  <div class="index-page" id="main" tabindex="-1">
     <div class="index-head">
       {{ partial "index/iLogo.html" . }}
       {{ partial "index/iNav.html" . }}
@@ -22,6 +22,14 @@
         <a href="{{ "posts/" | relLangURL }}" class="btn btn-read">{{ T "home.read" }}</a>
         <a href="{{ "about/" | relLangURL }}" class="btn btn-about">{{ T "home.about" }}</a>
       </div>
+      {{- with where site.RegularPages "Section" "posts" }}
+      {{- with index .ByDate.Reverse 0 }}
+      <div class="latest-post">
+        <span class="latest-label">{{ T "home.latest" }}</span>
+        <a class="latest-link" href="{{ .RelPermalink }}">{{ .Title }}</a>
+      </div>
+      {{- end }}
+      {{- end }}
       <div class="glass-card">
         {{ partial "index/iHitmap.html" . }}
       </div>

@@ -1,0 +1,17 @@
+{{- /* 相关文章：使用 Hugo 内置 Related，索引与权重在站点配置的 [related] 中定义 */ -}}
+{{- $related := site.RegularPages.Related . -}}
+{{- with first 3 $related }}
+<section class="related-area" aria-labelledby="related-title">
+  <h2 class="related-title" id="related-title">{{ T "post.related" }}</h2>
+  <ul class="related-list">
+    {{- range . }}
+    <li class="related-item">
+      <a class="related-link" href="{{ .RelPermalink }}">
+        <span class="related-name">{{ .Title }}</span>
+        <time class="related-date" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date | time.Format ":date_medium" }}</time>
+      </a>
+    </li>
+    {{- end }}
+  </ul>
+</section>
+{{- end }}

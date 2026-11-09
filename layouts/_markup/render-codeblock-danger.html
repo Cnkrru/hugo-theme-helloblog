@@ -1,4 +1,4 @@
-{{/* 提示块 - 错误（error），标题走官方属性语法 {title="..."} */}}
+{{/* 提示块 - 危险（danger），标题走官方属性语法 {title="..."} */}}
 {{- $title := "" -}}
 {{- if .Attributes -}}{{- with index .Attributes "title" -}}{{- $title = . -}}{{- end -}}{{- end -}}
 {{- partial "components/admonition.html" (dict "level" "error" "title" $title "inner" .Inner "page" .Page) -}}

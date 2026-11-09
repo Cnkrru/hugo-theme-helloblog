@@ -194,6 +194,31 @@
   transform: translateY(0) scale(0.97);
 }
 
+/* ---------- 最新文章入口 ---------- */
+.index-body .latest-post {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-sm);
+
+  font-size: 13px;
+  color: color-mix(in srgb, var(--g-text) 55%, transparent);
+}
+
+.latest-link {
+  max-width: 60vw;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  color: var(--g-color);
+  text-decoration: none;
+}
+
+.latest-link:hover {
+  text-decoration: underline;
+}
+
 .glass-card {
   width: 100%;
   max-width: 720px;

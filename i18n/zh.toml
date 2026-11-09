@@ -32,6 +32,7 @@
 "home.welcome" = "欢迎来到我的博客"
 "home.read" = "开始阅读"
 "home.about" = "关于我"
+"home.latest" = "最新文章"
 
 # ---------- 导航 ----------
 "nav.posts" = "文章"
@@ -70,6 +71,7 @@
 "post.words" = "总字数"
 "post.readingTime" = "预计时间"
 "post.minutes" = "{{ . }}分钟"
+"post.related" = "相关文章"
 "post.share" = "分享这篇文章"
 "post.wechatQr" = "微信分享二维码"
 "post.copyLink" = "复制链接"
@@ -119,7 +121,11 @@
 # ---------- 页脚 ----------
 "footer.runtime" = "本博客已运行: %s 天 %s 时 %s 分 %s秒"
 
+# ---------- 无障碍 ----------
+"a11y.skipToContent" = "跳到主要内容"
+
 # ---------- 404 ----------
 "notfound.title" = "页面不存在"
 "notfound.text" = "你访问的页面可能已被移除或地址有误。"
 "notfound.back" = "返回首页"
+"notfound.latest" = "或者看看最近的文章"

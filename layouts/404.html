@@ -4,5 +4,22 @@
   <h1 class="title">{{ T "notfound.title" }}</h1>
   <p class="text">{{ T "notfound.text" }}</p>
   <a href="{{ site.Home.RelPermalink }}" class="back-index">{{ T "notfound.back" }}</a>
+  {{- with where site.RegularPages "Section" "posts" }}
+  <div class="notfound-more">
+    <p class="notfound-hint">{{ T "notfound.latest" }}</p>
+    <ul class="notfound-list">
+      {{- range first 3 .ByDate.Reverse }}
+      <li>
+        <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+        <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date | time.Format ":date_medium" }}</time>
+      </li>
+      {{- end }}
+    </ul>
+    <p class="notfound-links">
+      <a href="{{ "category/" | relLangURL }}">{{ T "nav.category" }}</a>
+      <a href="{{ "tags/" | relLangURL }}">{{ T "nav.tags" }}</a>
+    </p>
+  </div>
+  {{- end }}
 </div>
 {{ end }}

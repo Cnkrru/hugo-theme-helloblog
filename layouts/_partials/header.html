@@ -1,5 +1,5 @@
 <header class="header">
-  {{ partial "pheader/logo.html" . }}
-  {{ partial "pheader/search.html" . }}
+  {{ partialCached "pheader/logo.html" . site.Language.Lang }}
+  {{ partialCached "pheader/search.html" . site.Language.Lang }}
   {{ partial "pheader/buttons.html" . }}
 </header>

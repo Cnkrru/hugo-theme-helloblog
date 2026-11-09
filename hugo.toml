@@ -62,7 +62,7 @@ disableKinds = ['term']            # 标签只在 /tags/ 原地筛选，不生�
 # 主题最低 Hugo 版本，安装时 Hugo 会做兼容性检查
 [module]
   [module.hugoVersion]
-    extended = false               # 主题不做图片处理，标准版即可
+    extended = false               # 主题只做图片缩放，标准版即可
     min = '0.146.0'
 
 # ---------- 输出与分页（站点级） ----------
@@ -75,6 +75,17 @@ disableKinds = ['term']            # 标签只在 /tags/ 原地筛选，不生�
 
 [services.rss]
   limit = 20                       # RSS 条目上限
+
+# ---------- 相关文章（站点级） ----------
+# 主题用 Hugo 内置的 Related 取相关文章，索引写在这里；写在主题里不生效，需要复制到站点根配置
+[related]
+  threshold = 20                   # 相关度阈值，低于该值的文章不展示
+  includeNewer = true              # 同时推荐比当前文章更新的内容
+  toLower = false                  # 标签是否忽略大小写
+
+  [[related.indices]]
+    name = 'tags'
+    weight = 100
 
 [imaging]
   quality = 85                     # 图片处理画质
@@ -92,8 +103,10 @@ disableKinds = ['term']            # 标签只在 /tags/ 原地筛选，不生�
   [markup.goldmark.renderer]
     unsafe = true                  # 允许正文内嵌 HTML
   [markup.goldmark.extensions]
-    [markup.goldmark.extensions.extras.mark]
-      enable = true                # 行内高亮 ==重点==
+    definitionList = true          # 定义列表
+    typographer = true             # 智能引号、破折号
+  [markup.goldmark.parser]
+    attribute = true               # 允许标题/段落用 {#id .class} 自定义属性
   [markup.tableOfContents]
     startLevel = 2
     endLevel = 4

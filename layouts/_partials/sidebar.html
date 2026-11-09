@@ -1,9 +1,9 @@
 {{/* 侧栏区：头像 / 一句话 / 天气 / 导航 */}}
 <aside class="sidebar">
-  {{ partial "psidebar/avator.html" . }}
-  {{ partial "psidebar/saying.html" . }}
-  {{ partial "psidebar/weather.html" . }}
+  {{ partialCached "psidebar/avator.html" . site.Language.Lang }}
+  {{ partialCached "psidebar/saying.html" . site.Language.Lang }}
+  {{ partialCached "psidebar/weather.html" . site.Language.Lang }}
   {{ partial "psidebar/nav.html" . }}
-  {{ partial "psidebar/stats.html" . }}
+  {{ partialCached "psidebar/stats.html" . site.Language.Lang }}
 </aside>
 <div class="sidebar-overlay"></div>

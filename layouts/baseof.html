@@ -14,15 +14,16 @@
     </script>
 
     <div id="app">
+      <a class="skip-link" href="#main">{{ T "a11y.skipToContent" }}</a>
       {{ block "app" . }}
         {{ partial "header.html" . }}
         <div class="center">
           {{ partial "sidebar.html" . }}
-          <main class="main">
+          <main class="main" id="main" tabindex="-1">
             {{ block "main" . }}{{ end }}
           </main>
         </div>
-        {{ partial "footer.html" . }}
+        {{ partialCached "footer.html" . site.Language.Lang }}
         {{/* 与原博客一致：仅文章详情页出现，列表页的滚动者是 .main，进度环无正文可度量 */}}
         {{ if and .IsPage (eq .Section "posts") }}{{ partial "pmain/backToTop.html" . }}{{ end }}
       {{ end }}

@@ -63,7 +63,7 @@
                 {{- end }}
               </span>
               {{- end }}
-              <span class="item-date">{{ .Date.Format "2006-01-02" }}</span>
+              <span class="item-date">{{ .Date | time.Format ":date_medium" }}</span>
             </a>
             {{- end }}
           </div>

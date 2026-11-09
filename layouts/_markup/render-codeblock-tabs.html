@@ -1,0 +1,13 @@
+{{/* 选项卡：@tab 分节，每节正文按 markdown 渲染，切换复用纯 CSS radio */}}
+{{- $data := partial "components/panels.html" .Inner -}}
+{{- $page := .Page -}}
+{{- $group := printf "tab-%d" .Ordinal -}}
+{{- $out := "" -}}
+{{- range $i, $label := $data.labels -}}
+  {{- $checked := cond (eq $i 0) " checked" "" -}}
+  {{- $body := $page.RenderString (dict "display" "block") (index $data.bodies $i) -}}
+  {{- $out = printf `%s<label class="tabs-tab"><input type="radio" id="%s-%d" name="%s"%s>%s</label><div class="tabs-panel">%s</div>` $out $group $i $group $checked (htmlEscape $label) $body -}}
+{{- end -}}
+{{- if $out -}}
+<div class="tabs">{{ $out | safeHTML }}</div>
+{{- end -}}

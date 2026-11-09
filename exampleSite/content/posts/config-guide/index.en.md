@@ -25,7 +25,7 @@ This page explains how to configure the theme: what ships with the theme, what m
 | Your site `hugo.toml` | Your site configuration | Yes, required |
 | `exampleSite/hugo.toml` | Demo site config, including self-test mounts | Reference only |
 
-```warn
+```warning
 Do not copy exampleSite/hugo.toml wholesale. Its [module] section mounts ../layouts and ../assets from the parent directory, which only works when the repository root is the theme itself. Once installed under themes/helloblog those paths do not exist and the build fails.
 ```
 
@@ -58,7 +58,7 @@ disableKinds = ['term']
   tag = 'tags'
 ```
 
-```warn
+```warning
 outputs.home must include json. Without it search silently returns nothing, and no error is shown.
 ```
 

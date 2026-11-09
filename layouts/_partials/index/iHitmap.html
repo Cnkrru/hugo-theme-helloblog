@@ -37,7 +37,8 @@
   {{- $defaultYear = index $years 0 }}
   {{- range $date, $count := $activity }}
     {{- if hasPrefix $date (printf "%d-" $defaultYear) }}
-      {{- $month := int (substr $date 5 2) }}
+      {{- /* 月份带前导零时 int 会按八进制解析（"09" 非法），先去掉前导零 */}}
+      {{- $month := int (strings.TrimLeft "0" (substr $date 5 2)) }}
       {{- if and (gt $count 0) (gt $month $defaultMonth) }}{{ $defaultMonth = $month }}{{ end }}
     {{- end }}
   {{- end }}

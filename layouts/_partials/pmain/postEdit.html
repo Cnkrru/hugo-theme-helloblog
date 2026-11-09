@@ -9,7 +9,7 @@
     </svg>
     <div class="pulish-info">
       <span>{{ T "post.published" }}</span>
-      <span>{{ .Date.Format "2006-01-02" }}</span>
+      <span>{{ .Date | time.Format ":date_medium" }}</span>
     </div>
   </div>
   <!-- 更新时间：内置 Lastmod 与发布日期相同时不出这一块 -->
@@ -24,7 +24,7 @@
     </svg>
     <div class="update-info">
       <span>{{ T "post.updated" }}</span>
-      <span>{{ $lastmod }}</span>
+      <span>{{ .Lastmod | time.Format ":date_medium" }}</span>
     </div>
   </div>
   {{- end }}

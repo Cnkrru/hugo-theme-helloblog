@@ -117,3 +117,46 @@ a:hover {
   scrollbar-width: thin;
   scrollbar-color: var(--g-color) transparent;
 }
+
+/* ============ 键盘焦点兜底 ============ */
+/* 部分组件已有专门样式，这里覆盖其余元素，避免 Tab 时看不到焦点 */
+:focus-visible {
+  outline: 2px solid var(--g-color);
+  outline-offset: 2px;
+}
+
+/* 跳过导航锚点的落点由脚本聚焦，不需要再画一圈 */
+#main:focus {
+  outline: none;
+}
+
+/* ============ 跳转主内容（skip link） ============ */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 16px;
+  z-index: 99;
+  padding: 8px 16px;
+  border-radius: 8px;
+  background-color: var(--g-bg);
+  color: var(--g-text);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+  top: 12px;
+}
+
+/* ============ 动效降级 ============ */
+/* 系统开启「减少动态效果」时，关闭过渡与关键帧动画 */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

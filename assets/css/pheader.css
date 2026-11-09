@@ -256,22 +256,37 @@ body.light .ld-btn .icon-moon {
 
 @media (max-width: 480px) {
   /* [响应式-xs] 窄屏 */
+  .header {
+    gap: var(--space-xs);
+    padding: var(--space-xs);
+  }
   .header .logo {
-    margin-left: var(--space-xs);
+    margin-left: 0;
   }
   .header .logo p {
-    font-size: 20px;
+    font-size: 18px;
   }
 
+  /* 搜索框改为可收缩：窄屏下优先保证页头不横向溢出 */
   .search {
-    width: 60%;
-    max-width: 480px;
-    height: 44px;
+    width: auto;
+    max-width: none;
+    height: 40px;
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: 0 var(--space-sm);
+  }
+  .search input {
+    min-width: 0;
   }
 
+  .button-list {
+    flex-shrink: 0;
+    gap: 4px;
+  }
   .h-button {
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
   }
 }
 

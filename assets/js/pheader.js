@@ -1,5 +1,3 @@
-import { Howl } from '../vendor/howler.js'
-
 /* ====================<运行时文案>==================== */
 
 // 构建期由 baseof.html 输出，缺字段时用调用处传入的兜底文案
@@ -66,6 +64,21 @@ let musicTime = 0
 let duration = 0
 let isPlaying = false
 let isMuted = false
+let mountToken = 0
+let howlClass = null
+
+// howler 体积较大：首次播放时才按 meta 地址加载，只浏览不点播放不会产生该请求
+const loadHowl = () => {
+  if (!howlClass) {
+    const src = document.querySelector('meta[name="music-script"]')?.content
+    if (!src) return Promise.reject(new Error('music script missing'))
+    howlClass = import(src).then((mod) => mod.Howl)
+    howlClass.catch(() => {
+      howlClass = null
+    })
+  }
+  return howlClass
+}
 
 const formatTime = (time) => {
   const min = Math.floor(time / 60)
@@ -136,14 +149,26 @@ const nextMusic = () => {
   loadMusic((musicIndex + 1 + musicList.length) % musicList.length, true)
 }
 
-const musicMount = (song, autoplay) => {
+const musicMount = async (song, autoplay) => {
   musicUnmount()
   if (!song.audio) return
 
+  const token = ++mountToken
   musicTime = 0
   duration = 0
   setStatus(i18n('musicLoading', '加载中…'))
   renderProgress()
+
+  let Howl = null
+  try {
+    Howl = await loadHowl()
+  } catch (error) {
+    console.error('[ERR]:音乐模块加载失败', error)
+    setStatus(i18n('musicLoadFailed', '音乐源加载失败'), true)
+    return
+  }
+  // 等待模块加载期间用户可能又切了歌，丢弃过期请求
+  if (token !== mountToken) return
 
   howler = new Howl({
     src: [song.audio, ...(song.backupAudio || [])],
@@ -277,7 +302,8 @@ export const initMusic = () => {
     if (coverFallback) coverFallback.hidden = false
   })
 
-  if (musicList.length) loadMusic(musicIndex, false)
+  // 只先渲染首曲信息，首次点击播放时再加载音频模块
+  if (musicList.length) renderCurrent()
   console.info('[INFO]:音乐播放器初始化完成')
 }
 

@@ -1,6 +1,6 @@
 {{/* 栏目列表页：文章卡片网格 + 服务端分页（每页数量走 [pagination].pagerSize） */}}
 {{ define "main" }}
-{{- $paginator := .Paginate .RegularPages }}
+{{- $paginator := .Paginator }}
 <div class="post-list">
   <div class="list-area">
     <div class="card-grid">
@@ -10,6 +10,11 @@
         <span class="post-card-category">{{ . }}</span>
         {{- end }}
         <h2 class="post-card-title">{{ .Title }}</h2>
+        {{- /* 无封面时用描述补足卡片高度，让卡片比例更接近常规内容卡片 */}}
+        {{- $excerpt := .Description | default (.Summary | plainify) }}
+        {{- with $excerpt }}
+        <p class="post-card-excerpt">{{ . | truncate 80 }}</p>
+        {{- end }}
         <div class="post-card-meta">
           {{- with .Params.tags }}
           <div class="post-card-tags">
@@ -18,7 +23,7 @@
             {{- end }}
           </div>
           {{- end }}
-          <time class="post-card-date">{{ .Date.Format "2006-01-02" }}</time>
+          <time class="post-card-date" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date | time.Format ":date_medium" }}</time>
         </div>
       </a>
       {{- end }}

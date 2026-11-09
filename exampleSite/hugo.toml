@@ -28,6 +28,16 @@ disableKinds = ['term']
 [services.rss]
   limit = 20
 
+# 相关文章：内置 Related 按标签计算相关度
+[related]
+  threshold = 20
+  includeNewer = true
+  toLower = false
+
+  [[related.indices]]
+    name = 'tags'
+    weight = 100
+
 # 图片处理：统一画质与重采样算法
 [imaging]
   quality = 85
@@ -69,10 +79,15 @@ disableKinds = ['term']
   url = 'link/'
   weight = 5
 
-# 行内高亮 ==重点==：Goldmark 官方 mark 扩展
+[markup.goldmark.renderer]
+  unsafe = true
+
 [markup.goldmark.extensions]
-  [markup.goldmark.extensions.extras.mark]
-    enable = true
+  definitionList = true
+  typographer = true
+
+[markup.goldmark.parser]
+  attribute = true
 
 # 挂载上层主题目录：仓库根即主题根，因此用相对路径挂载，不依赖仓库文件夹名
 [module]

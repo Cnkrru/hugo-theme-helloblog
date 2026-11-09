@@ -415,6 +415,11 @@ export const particles = () => {
 export const initParticle = () => {
   const canvas = document.querySelector('.particle-canvas')
   if (!canvas) return
+  // 系统开启「减少动态效果」时不启动粒子，直接移除画布避免留白
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    canvas.remove()
+    return
+  }
   particles().start(canvas)
   console.info('[INFO]:粒子初始化完成')
 }
@@ -463,6 +468,11 @@ const twStep = () => {
 export const twWorker = () => {
   welcomeEl = document.querySelector('.welcome')
   if (!welcomeEl) return
+  // 系统开启「减少动态效果」时直接显示首句，不做逐字动画
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    welcomeEl.textContent = texts[0]
+    return
+  }
   welcomeEl.textContent = ''
   twStep()
 }

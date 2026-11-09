@@ -1,5 +1,10 @@
 <nav class="index-nav">
+  {{- $page := . }}
+  {{- $home := relLangURL "/" }}
   {{- range site.Menus.main }}
-  <a class="nav-element" href="{{ .URL | relLangURL }}">{{ or (T .Identifier) .Name }}</a>
+  {{- $href := .URL | relLangURL }}
+  {{- /* 当前页或该栏目的子页都标记为当前项，供样式与读屏器识别 */}}
+  {{- $active := or (eq $page.RelPermalink $href) (and (ne $href $home) (hasPrefix $page.RelPermalink $href)) }}
+  <a class="nav-element" href="{{ $href }}"{{ if $active }} aria-current="page"{{ end }}>{{ or (T .Identifier) .Name }}</a>
   {{- end }}
 </nav>

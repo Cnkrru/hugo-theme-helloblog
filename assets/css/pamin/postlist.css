@@ -125,7 +125,10 @@
 .post-card {
   display: flex;
   flex-direction: column;
-  gap: var(--space-sm);
+
+  /* 用最小高度兜底：标题只有一行时卡片也不会显得扁 */
+  min-height: 200px;
+  box-sizing: border-box;
 
   padding: var(--space-md);
   border: var(--border-width) solid color-mix(in srgb, var(--g-color) 20%, transparent);
@@ -178,6 +181,7 @@
 /* 分类徽标 */
 .post-card-category {
   width: fit-content;
+  margin-bottom: var(--space-sm);
   padding: 2px 8px;
   border-radius: 4px;
 
@@ -192,7 +196,7 @@
 
 /* 标题：最多两行 */
 .post-card-title {
-  margin: 0;
+  margin: 0 0 var(--space-xs);
 
   font-size: 18px;
   font-weight: 700;
@@ -203,6 +207,22 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
   word-break: break-all;
+}
+
+/* 摘要：最多三行，把卡片撑到合适的阅读比例 */
+.post-card-excerpt {
+  margin: 0;
+
+  font-size: 13px;
+  line-height: 1.7;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+
+  color: color-mix(in srgb, var(--g-text) 65%, transparent);
 }
 
 /* 底部信息行：标签 + 日期 */

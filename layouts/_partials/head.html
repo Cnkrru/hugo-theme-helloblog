@@ -1,5 +1,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+{{ hugo.Generator }}
 {{- $title := cond .IsHome site.Title (printf "%s | %s" .Title site.Title) }}
 <title>{{ $title }}</title>
 {{- $desc := .Description | default site.Params.description }}
@@ -20,10 +21,20 @@
 {{- with site.Home.OutputFormats.Get "rss" }}
 <link rel="alternate" type="{{ .MediaType.Type }}" href="{{ .Permalink }}" title="{{ site.Title }}">
 {{- end }}
+{{- if eq .Kind "section" }}
+{{- with .Paginator }}
+{{- if .HasPrev }}
+<link rel="prev" href="{{ .Prev.URL | absURL }}">
+{{- end }}
+{{- if .HasNext }}
+<link rel="next" href="{{ .Next.URL | absURL }}">
+{{- end }}
+{{- end }}
+{{- end }}
 <link rel="icon" href="{{ "favicon.ico" | relURL }}">
 {{ partial "opengraph.html" . }}
 {{ partial "twitter_cards.html" . }}
 {{ partial "schema.html" . }}
-{{ partial "head/css.html" . }}
-  {{ partial "head/background.html" . }}
-  {{ partial "head/js.html" . }}
+{{ partialCached "head/css.html" . site.Language.Lang }}
+{{ partialCached "head/background.html" . site.Language.Lang }}
+{{ partialCached "head/js.html" . site.Language.Lang }}

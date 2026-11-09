@@ -32,6 +32,7 @@
 "home.welcome" = "Welcome to my blog"
 "home.read" = "Start reading"
 "home.about" = "About me"
+"home.latest" = "Latest post"
 
 # ---------- Navigation ----------
 "nav.posts" = "Posts"
@@ -70,6 +71,7 @@
 "post.words" = "Words"
 "post.readingTime" = "Reading time"
 "post.minutes" = "{{ . }} min"
+"post.related" = "Related posts"
 "post.share" = "Share this post"
 "post.wechatQr" = "WeChat share QR code"
 "post.copyLink" = "Copy link"
@@ -114,12 +116,20 @@
 # ---------- Pagination ----------
 "pager.prev" = "Previous"
 "pager.next" = "Next"
-"pager.total" = "{{ . }} pages in total"
 
 # ---------- Footer ----------
 "footer.runtime" = "Blog running: %sd %sh %sm %ss"
+
+# ---------- Accessibility ----------
+"a11y.skipToContent" = "Skip to main content"
 
 # ---------- 404 ----------
 "notfound.title" = "Page not found"
 "notfound.text" = "The page you visited may have been removed or the address is incorrect."
 "notfound.back" = "Back to home"
+"notfound.latest" = "Or read the latest posts"
+
+# 复数表必须放在文件末尾：TOML 表头会接管后续所有键
+[pager.total]
+one = "{{ .Count }} page in total"
+other = "{{ .Count }} pages in total"
